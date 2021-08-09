@@ -4,25 +4,20 @@ import ReactStars from 'react-rating-stars-component';
 import restaurante from '../../assets/restaurante-fake.png';
 import { Restaurant , RestaurantInfo, Title, Address, RestaurantPhoto} from './styles';
 
-const RestaurantCard = () => (
+const RestaurantCard = ({ restaurant, onClick }) => (
   <>
-    <Restaurant>
+    <Restaurant onClick={onClick}>
       <RestaurantInfo>
-        <Title>Sal e Brasa </Title>
-        <ReactStars count={5} isHalf value={4} edit={false} activeColor="#e7711c" />
-        <Address>Av. Holandeses - Calhau</Address>
+        <Title>{restaurant.name}</Title>
+        <ReactStars count={5} isHalf value={restaurant.rating} edit={false} activeColor="#e7711c" />
+        <Address>{restaurant.vicinity || restaurant.formatted_address}</Address>
       </RestaurantInfo>
-      <RestaurantPhoto src={restaurante} alt="Foto do Restaurante" />
+      <RestaurantPhoto src={restaurant.photos ? restaurant.photos[0].getUrl() : restaurante} 
+                       alt="Foto do Restaurante" 
+      />
     </Restaurant> 
 
-    <Restaurant>
-      <RestaurantInfo>
-        <Title>Cheiro Verde </Title>
-        <ReactStars count={5} isHalf value={4} edit={false} activeColor="#e7711c" />
-        <Address>Rua do Babuzal - Cohama</Address>
-      </RestaurantInfo>
-      <RestaurantPhoto src={restaurante} alt="Foto do Restaurante" />
-    </Restaurant> 
+ 
   </>
 
 );
