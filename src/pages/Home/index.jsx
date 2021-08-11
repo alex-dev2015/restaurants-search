@@ -12,8 +12,8 @@ import { Container, Search , Carousel , Logo, Wrapper,  CarouselTitle, ModalTitl
 
 const Home = () => {
 
-  const [inputValue, setImputValue] = useState('');
-  const [query, setQuery] = useState(null);
+  const [inputValue, setInputValue] = useState('');
+  const [query, setQuery] = useState('');
   const [placeId, setPlaceId] = useState(null); 
   const [modalOpened, setModalOpened] = useState(false);
   const { restaurants, restaurantSelected } = useSelector((state) => state.restaurants);
@@ -26,6 +26,11 @@ const Home = () => {
     slidesToShow: 4,
     slidesToScroll: 4,
     adaptiveHeight: true,
+  };
+
+  const handleChange = (e) => {
+    console.log(e)
+    setInputValue(e.target.value);
   };
 
   function handlekeyPress(e){
@@ -45,36 +50,31 @@ const Home = () => {
       <Search>
         <Logo src={logo} alt="Logo dos restaurantes" />
         <TextField 
-          id="outlined-basic" 
           label="Pesquisar" 
           outlined
-          variant="outlined" 
-          trailingIcon={<MaterialIcon role="button" icon="search"/>}
-        >
+          trailingIcon={<MaterialIcon role="button" icon="search"/>}>
           <Input 
             value={inputValue}
-            onChange={(e) => setImputValue(e.target.value)}
             onKeyPress={handlekeyPress}
+            onChange={handleChange}
           />
         </TextField>
 
         {restaurants.length > 0 ? (
           <>
             <CarouselTitle>Titulo</CarouselTitle>
-        <Carousel {...settings} >
-          {restaurants.map((restaurant) => 
-            <Card 
-                  key={restaurant.place_id}
-                  photo={restaurant.photos ? restaurant.photos[0].getUrl() : restaurante} 
-                  title={restaurant.name}
-            />)
-          }
-                 
-        </Carousel>
+              <Carousel {...settings} >
+                  {restaurants.map((restaurant) => (
+                    <Card 
+                    key={restaurant.place_id}
+                    photo={restaurant.photos ? restaurant.photos[0].getUrl() : restaurante} 
+                    title={restaurant.name}
+                />))}
+              </Carousel>
           </>  
-        ) : (
-          <Loader />
-        )}
+        ): (
+             <Loader />
+           )}
 
         
       </Search>

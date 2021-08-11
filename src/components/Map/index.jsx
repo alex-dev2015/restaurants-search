@@ -25,7 +25,7 @@ import { rest } from 'lodash';
 
   function getRestaurantById(placeId){
     const service = new google.maps.places.PlacesService(map)  ;
-        dispatch(setRestaurants(null));
+        dispatch(setRestaurant(null));
         const request = {
           placeId,
           fields: ['name', 'opening_hours', 'formatted_address', 'formatted_phone_number'],
@@ -33,7 +33,7 @@ import { rest } from 'lodash';
 
         service.getDetails(request, (place, status) => {
           if (status === google.maps.places.PlacesServiceStatus.OK) {
-               dispatch(setRestaurants(place));
+               dispatch(setRestaurant(place));
           }
         });
   }
